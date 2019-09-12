@@ -1,4 +1,5 @@
 #include "main.h"
+using namespace okapi;
 
 /**
  * Runs the operator control code. This function will be started in its own task
