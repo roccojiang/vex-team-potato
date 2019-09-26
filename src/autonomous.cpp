@@ -1,4 +1,6 @@
 #include "main.h"
+#include "common.h"
+using namespace okapi;
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -13,5 +15,5 @@
  */
 void autonomous()
 {
-  
+  chassis.moveDistance(1_m);
 }
