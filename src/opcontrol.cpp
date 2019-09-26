@@ -25,9 +25,15 @@ const int DRIVE_MOTOR_LEFT_B = 11;
 const int DRIVE_MOTOR_RIGHT_F = 3;
 const int DRIVE_MOTOR_RIGHT_B = 12;
 
+// Chassis measurements
+const auto WHEEL_DIAMETER = 4_in;
+const auto CHASSIS_WIDTH = 12.5_in;
+
 auto chassis = ChassisControllerFactory::create(
 	{-DRIVE_MOTOR_LEFT_F, -DRIVE_MOTOR_LEFT_B},  // Left motors
-	{DRIVE_MOTOR_RIGHT_F, DRIVE_MOTOR_RIGHT_B}   // Right motors
+	{DRIVE_MOTOR_RIGHT_F, DRIVE_MOTOR_RIGHT_B},   // Right motors
+	AbstractMotor::gearset::green,  // Torque gearset
+	{WHEEL_DIAMETER, CHASSIS_WIDTH}
 );
 
 void opcontrol()
