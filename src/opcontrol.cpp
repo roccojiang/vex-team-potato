@@ -15,10 +15,15 @@ using namespace okapi;
  * task, not resume it from where it left off.
  */
 
-const int DRIVE_MOTOR_LEFT_F = 2;    // Front left drive motor
-const int DRIVE_MOTOR_LEFT_B = 11;   // Back left drive motor
-const int DRIVE_MOTOR_RIGHT_F = 3;   // Front right drive motor
-const int DRIVE_MOTOR_RIGHT_B = 12;  // Back right drive motor
+// Modifier controller sensitivity
+const float CONT_X_MODIFIER = 0.3;
+const float CONT_Y_MODIFIER = 0.5;
+
+// Motor ports
+const int DRIVE_MOTOR_LEFT_F = 2;
+const int DRIVE_MOTOR_LEFT_B = 11;
+const int DRIVE_MOTOR_RIGHT_F = 3;
+const int DRIVE_MOTOR_RIGHT_B = 12;
 
 auto chassis = ChassisControllerFactory::create(
 	{-DRIVE_MOTOR_LEFT_F, -DRIVE_MOTOR_LEFT_B},  // Left motors
@@ -31,8 +36,10 @@ void opcontrol()
 
 	while (true)
 	{
-		// Tank drive with left and right sticks
-		chassis.tank(controller.getAnalog(ControllerAnalog::leftY),
-							 controller.getAnalog(ControllerAnalog::rightY));
+		// Arcade drive with left and right sticks
+		chassis.arcade(controller.getAnalog(ControllerAnalog::rightY) * CONT_Y_MODIFIER,
+							     controller.getAnalog(ControllerAnalog::rightX) * CONT_X_MODIFIER);
+
+		pros::delay(10);
 	}
 }
