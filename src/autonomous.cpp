@@ -15,5 +15,8 @@ using namespace okapi;
  */
 void autonomous()
 {
-  chassis.moveDistance(1_m);
+  // Test code for autonomous
+  chassis.setMaxVelocity(50);  // Range [0 - 600] rpm
+  chassis.moveDistance(12_in);
+  chassis.turnAngle(90_deg);
 }

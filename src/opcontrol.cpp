@@ -19,9 +19,11 @@ using namespace okapi;
 void opcontrol()
 {
 	Controller controller;
+	ControllerButton autonomous_button(ControllerDigital::X);
 
 	while (true)
 	{
+		if (autonomous_button.changedToPressed()) autonomous();
 		// Arcade drive with left and right sticks
 		chassis.arcade(controller.getAnalog(ControllerAnalog::rightY) * CONT_Y_MODIFIER,
 							     controller.getAnalog(ControllerAnalog::rightX) * CONT_X_MODIFIER);

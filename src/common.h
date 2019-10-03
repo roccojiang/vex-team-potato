@@ -19,5 +19,8 @@ extern const int DRIVE_MOTOR_RIGHT_B;
 extern const QLength WHEEL_DIAMETER;
 extern const QLength CHASSIS_WIDTH;
 
+// Gear ratio
+extern const AbstractMotor::GearsetRatioPair GEAR_RATIO;
+
 // Chassis
 extern ChassisControllerIntegrated chassis;

@@ -18,12 +18,15 @@ const int DRIVE_MOTOR_RIGHT_B = 12;
 
 // Chassis measurements
 const QLength WHEEL_DIAMETER = 4_in;
-const QLength CHASSIS_WIDTH = 12.5_in;
+const QLength CHASSIS_WIDTH = 13.5_in;  // Track width
+
+// Gear ratio
+const AbstractMotor::GearsetRatioPair GEAR_RATIO = AbstractMotor::gearset::green * (36.0/84.0);
 
 // Chassis
 ChassisControllerIntegrated chassis = ChassisControllerFactory::create(
   {-DRIVE_MOTOR_LEFT_F, -DRIVE_MOTOR_LEFT_B},  // Left motors
 	{DRIVE_MOTOR_RIGHT_F, DRIVE_MOTOR_RIGHT_B},  // Right motors
-  AbstractMotor::gearset::green,  // Torque gearset
+  GEAR_RATIO,  // Motor gearset multiplied by external physical gear ratio
   {WHEEL_DIAMETER, CHASSIS_WIDTH}
 );
