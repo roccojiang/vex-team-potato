@@ -11,10 +11,20 @@ const float CONT_X_MODIFIER = 0.3;
 const float CONT_Y_MODIFIER = 0.5;
 
 // Motor ports
-const int DRIVE_MOTOR_LEFT_F = 2;
-const int DRIVE_MOTOR_LEFT_B = 11;
-const int DRIVE_MOTOR_RIGHT_F = 3;
-const int DRIVE_MOTOR_RIGHT_B = 12;
+const int DRIVE_MOTOR_LEFT_F = 5;
+const int DRIVE_MOTOR_LEFT_B = 15;
+const int DRIVE_MOTOR_RIGHT_F = 6;
+const int DRIVE_MOTOR_RIGHT_B = 16;
+
+const int INTAKE_MOTOR_LEFT_P = 11;
+const int INTAKE_MOTOR_RIGHT_P = 20;
+
+// Motors
+Motor INTAKE_MOTOR_LEFT(11);
+Motor INTAKE_MOTOR_RIGHT(-20);
+
+// Motor groups
+MotorGroup INTAKE_MOTORS({INTAKE_MOTOR_LEFT, INTAKE_MOTOR_RIGHT});
 
 // Chassis measurements
 const QLength WHEEL_DIAMETER = 4_in;

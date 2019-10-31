@@ -26,7 +26,7 @@
             "-funwind-tables",
             "--std=gnu++17",
             "-o",
-            "/var/folders/53/5n8c_mv56pzd5f3rng_3v8_wmcpn1j/T/tmpv8gj6bey/autonomous.cpp.o",
+            "bin/autonomous.cpp.o",
             "src/autonomous.cpp"
         ],
         "directory": "/Users/0220120278/Desktop/Harrow/Churchill House/VEX Robotics/2019-20/Potato",
@@ -59,7 +59,7 @@
             "-funwind-tables",
             "--std=gnu++17",
             "-o",
-            "/var/folders/53/5n8c_mv56pzd5f3rng_3v8_wmcpn1j/T/tmpv8gj6bey/opcontrol.cpp.o",
+            "bin/opcontrol.cpp.o",
             "src/opcontrol.cpp"
         ],
         "directory": "/Users/0220120278/Desktop/Harrow/Churchill House/VEX Robotics/2019-20/Potato",
@@ -92,11 +92,11 @@
             "-funwind-tables",
             "--std=gnu++17",
             "-o",
-            "/var/folders/53/5n8c_mv56pzd5f3rng_3v8_wmcpn1j/T/tmpv8gj6bey/initialize.cpp.o",
-            "src/initialize.cpp"
+            "bin/common.cpp.o",
+            "src/common.cpp"
         ],
         "directory": "/Users/0220120278/Desktop/Harrow/Churchill House/VEX Robotics/2019-20/Potato",
-        "file": "src/initialize.cpp"
+        "file": "src/common.cpp"
     },
     {
         "arguments": [
@@ -125,10 +125,10 @@
             "-funwind-tables",
             "--std=gnu++17",
             "-o",
-            "/var/folders/53/5n8c_mv56pzd5f3rng_3v8_wmcpn1j/T/tmpv8gj6bey/common.cpp.o",
-            "src/common.cpp"
+            "bin/initialize.cpp.o",
+            "src/initialize.cpp"
         ],
         "directory": "/Users/0220120278/Desktop/Harrow/Churchill House/VEX Robotics/2019-20/Potato",
-        "file": "src/common.cpp"
+        "file": "src/initialize.cpp"
     }
 ]

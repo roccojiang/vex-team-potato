@@ -15,6 +15,16 @@ extern const int DRIVE_MOTOR_LEFT_B;
 extern const int DRIVE_MOTOR_RIGHT_F;
 extern const int DRIVE_MOTOR_RIGHT_B;
 
+extern const int INTAKE_MOTOR_LEFT_P;
+extern const int INTAKE_MOTOR_RIGHT_P;
+
+// Motors
+extern Motor INTAKE_MOTOR_LEFT;
+extern Motor INTAKE_MOTOR_RIGHT;
+
+// Motor groups
+extern MotorGroup INTAKE_MOTORS;
+
 // Chassis measurements
 extern const QLength WHEEL_DIAMETER;
 extern const QLength CHASSIS_WIDTH;
