@@ -29,6 +29,7 @@ MotorGroup INTAKE_MOTORS({INTAKE_MOTOR_LEFT, INTAKE_MOTOR_RIGHT});
 // Chassis measurements
 const QLength WHEEL_DIAMETER = 4_in;
 const QLength CHASSIS_WIDTH = 13.5_in;  // Track width
+const QLength CHASSIS_LENGTH = 16_in;
 
 // Gear ratio
 const AbstractMotor::GearsetRatioPair GEAR_RATIO = AbstractMotor::gearset::green * (36.0/84.0);
@@ -39,4 +40,12 @@ ChassisControllerIntegrated chassis = ChassisControllerFactory::create(
 	{DRIVE_MOTOR_RIGHT_F, DRIVE_MOTOR_RIGHT_B},  // Right motors
   GEAR_RATIO,  // Motor gearset multiplied by external physical gear ratio
   {WHEEL_DIAMETER, CHASSIS_WIDTH}
+);
+
+// Async controller for motion profile
+AsyncMotionProfileController profile_controller = AsyncControllerFactory::motionProfile(
+  1.0,  // Max linear velocity, m/s
+  2.0,  // Max linear acceleration, m/s^2
+  10.0,  // Max linear jerk, m/s^3
+  chassis  // Chassis controller
 );

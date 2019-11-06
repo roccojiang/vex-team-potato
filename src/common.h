@@ -28,9 +28,13 @@ extern MotorGroup INTAKE_MOTORS;
 // Chassis measurements
 extern const QLength WHEEL_DIAMETER;
 extern const QLength CHASSIS_WIDTH;
+extern const QLength CHASSIS_LENGTH;
 
 // Gear ratio
 extern const AbstractMotor::GearsetRatioPair GEAR_RATIO;
 
 // Chassis
 extern ChassisControllerIntegrated chassis;
+
+// Async controller for motion profile
+extern AsyncMotionProfileController profile_controller;

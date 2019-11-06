@@ -16,7 +16,13 @@ using namespace okapi;
 void autonomous()
 {
   // Test code for autonomous
+  /*
   chassis.setMaxVelocity(50);  // Range [0 - 600] rpm
   chassis.moveDistance(12_in);
   chassis.turnAngle(90_deg);
+  */
+
+  profile_controller.generatePath({Point{CHASSIS_LENGTH, 0_in, 0_deg}, Point{33.4_in, 0_in, 0_deg}}, "A");
+  profile_controller.setTarget("A");
+  profile_controller.waitUntilSettled();
 }
