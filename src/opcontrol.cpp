@@ -21,6 +21,8 @@ void opcontrol()
 	Controller controller;
 	ControllerButton autonomous_button(ControllerDigital::X);
 	ControllerButton intake_button(ControllerDigital::A);
+	ControllerButton lift_up_button(ControllerDigital::up);
+	ControllerButton lift_down_button(ControllerDigital::down);
 
 	while (true)
 	{
@@ -28,6 +30,10 @@ void opcontrol()
 
 		if (intake_button.isPressed()) INTAKE_MOTORS.moveVoltage(12000);
 		else INTAKE_MOTORS.moveVoltage(0);
+
+		if (lift_up_button.isPressed()) LIFT_MOTOR.moveVoltage(12000);
+		else if (lift_down_button.isPressed()) LIFT_MOTOR.moveVoltage(-12000);
+		else LIFT_MOTOR.moveVoltage(0);
 
 		// Arcade drive with left and right sticks
 		chassis.arcade(controller.getAnalog(ControllerAnalog::rightY) * CONT_Y_MODIFIER,

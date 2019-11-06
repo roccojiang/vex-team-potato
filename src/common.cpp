@@ -19,9 +19,13 @@ const int DRIVE_MOTOR_RIGHT_B = 16;
 const int INTAKE_MOTOR_LEFT_P = 11;
 const int INTAKE_MOTOR_RIGHT_P = 20;
 
+const int LIFT_MOTOR_P = 17;
+
 // Motors
 Motor INTAKE_MOTOR_LEFT(11);
 Motor INTAKE_MOTOR_RIGHT(-20);
+
+Motor LIFT_MOTOR(17);
 
 // Motor groups
 MotorGroup INTAKE_MOTORS({INTAKE_MOTOR_LEFT, INTAKE_MOTOR_RIGHT});

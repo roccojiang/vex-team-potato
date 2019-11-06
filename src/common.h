@@ -18,9 +18,13 @@ extern const int DRIVE_MOTOR_RIGHT_B;
 extern const int INTAKE_MOTOR_LEFT_P;
 extern const int INTAKE_MOTOR_RIGHT_P;
 
+extern const int LIFT_MOTOR_P;
+
 // Motors
 extern Motor INTAKE_MOTOR_LEFT;
 extern Motor INTAKE_MOTOR_RIGHT;
+
+extern Motor LIFT_MOTOR;
 
 // Motor groups
 extern MotorGroup INTAKE_MOTORS;
