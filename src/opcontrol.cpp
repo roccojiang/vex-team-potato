@@ -27,12 +27,15 @@ void opcontrol()
 
 	while (true)
 	{
+		// Autonomous debug button
 		if (autonomous_button.changedToPressed()) autonomous();
 
+		// Intake control
 		if (intake_in_button.isPressed()) INTAKE_MOTORS.moveVoltage(12000);
 		else if (intake_out_button.isPressed()) INTAKE_MOTORS.moveVoltage(-12000);
 		else INTAKE_MOTORS.moveVoltage(0);
 
+		// Lift control
 		if (lift_up_button.isPressed()) LIFT_MOTOR.moveVoltage(12000);
 		else if (lift_down_button.isPressed()) LIFT_MOTOR.moveVoltage(-12000);
 		else LIFT_MOTOR.moveVoltage(0);

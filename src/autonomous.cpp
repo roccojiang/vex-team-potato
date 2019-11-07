@@ -15,14 +15,7 @@ using namespace okapi;
  */
 void autonomous()
 {
-  // Test code for autonomous
-  /*
-  chassis.setMaxVelocity(50);  // Range [0 - 600] rpm
-  chassis.moveDistance(12_in);
-  chassis.turnAngle(90_deg);
-  */
-
-  // Move forwards to row of blocks
+  // Move forward to row of blocks
   profile_controller.generatePath({Point{CHASSIS_LENGTH, 0_in, 0_deg}, Point{33_in, 0_in, 0_deg}}, "A");
   profile_controller.setTarget("A");
   profile_controller.waitUntilSettled();
@@ -30,9 +23,9 @@ void autonomous()
   // Activate intake
   intake_controller.setTarget(100);  // Maximum velocity 100 for red gearset
 
-  // Continue moving forwards through row of blocks
+  // Continue moving forward through row of blocks, then deactivate intake
   profile_controller.generatePath({Point{33_in, 0_in, 0_deg}, Point{50_in, 0_in, 0_deg}}, "B");
   profile_controller.setTarget("B");
   profile_controller.waitUntilSettled();
-  intake_controller.setTarget(0);
+  intake_controller.setTarget(0);  // Set velocity to 0
 }
