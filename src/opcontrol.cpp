@@ -20,7 +20,8 @@ void opcontrol()
 {
 	Controller controller;
 	ControllerButton autonomous_button(ControllerDigital::X);
-	ControllerButton intake_button(ControllerDigital::A);
+	ControllerButton intake_in_button(ControllerDigital::A);
+	ControllerButton intake_out_button(ControllerDigital::B);
 	ControllerButton lift_up_button(ControllerDigital::up);
 	ControllerButton lift_down_button(ControllerDigital::down);
 
@@ -28,7 +29,16 @@ void opcontrol()
 	{
 		if (autonomous_button.changedToPressed()) autonomous();
 
-		if (intake_button.isPressed()) INTAKE_MOTORS.moveVoltage(12000);
+		if (intake_in_button.isPressed())
+		{
+			INTAKE_MOTOR_LEFT.moveVoltage(12000);
+			INTAKE_MOTOR_RIGHT.moveVoltage(-12000);
+		}
+		else if (intake_out_button.isPressed())
+		{
+			INTAKE_MOTOR_LEFT.moveVoltage(-12000);
+			INTAKE_MOTOR_RIGHT.moveVoltage(12000);
+		}
 		else INTAKE_MOTORS.moveVoltage(0);
 
 		if (lift_up_button.isPressed()) LIFT_MOTOR.moveVoltage(12000);

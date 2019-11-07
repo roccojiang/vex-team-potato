@@ -23,7 +23,7 @@ const int LIFT_MOTOR_P = 17;
 
 // Motors
 Motor INTAKE_MOTOR_LEFT(11);
-Motor INTAKE_MOTOR_RIGHT(-20);
+Motor INTAKE_MOTOR_RIGHT(20);
 
 Motor LIFT_MOTOR(17);
 
