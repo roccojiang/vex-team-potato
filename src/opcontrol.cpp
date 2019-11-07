@@ -41,8 +41,8 @@ void opcontrol()
 		else LIFT_MOTOR.moveVoltage(0);
 
 		// Arcade drive with left and right sticks
-		chassis.arcade(controller.getAnalog(ControllerAnalog::rightY) * CONT_Y_MODIFIER,
-							     controller.getAnalog(ControllerAnalog::rightX) * CONT_X_MODIFIER);
+		chassis.arcade(controller.getAnalog(ControllerAnalog::leftY) * CONT_Y_MODIFIER,
+							     controller.getAnalog(ControllerAnalog::leftX) * CONT_X_MODIFIER);
 
 		pros::delay(10);
 	}
