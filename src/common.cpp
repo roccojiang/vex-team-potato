@@ -28,7 +28,7 @@ Motor INTAKE_MOTOR_RIGHT(20);
 Motor LIFT_MOTOR(17);
 
 // Motor groups
-MotorGroup INTAKE_MOTORS({INTAKE_MOTOR_LEFT, INTAKE_MOTOR_RIGHT});
+MotorGroup INTAKE_MOTORS({11, -20});
 
 // Chassis measurements
 const QLength WHEEL_DIAMETER = 4_in;
@@ -53,3 +53,6 @@ AsyncMotionProfileController profile_controller = AsyncControllerFactory::motion
   10.0,  // Max linear jerk, m/s^3
   chassis  // Chassis controller
 );
+
+// Async controller for intake
+AsyncVelIntegratedController intake_controller = AsyncControllerFactory::velIntegrated(INTAKE_MOTORS);

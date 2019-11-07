@@ -42,3 +42,6 @@ extern ChassisControllerIntegrated chassis;
 
 // Async controller for motion profile
 extern AsyncMotionProfileController profile_controller;
+
+// Async controller for intake
+extern AsyncVelIntegratedController intake_controller;

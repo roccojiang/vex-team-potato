@@ -22,7 +22,17 @@ void autonomous()
   chassis.turnAngle(90_deg);
   */
 
-  profile_controller.generatePath({Point{CHASSIS_LENGTH, 0_in, 0_deg}, Point{33.4_in, 0_in, 0_deg}}, "A");
+  // Move forwards to row of blocks
+  profile_controller.generatePath({Point{CHASSIS_LENGTH, 0_in, 0_deg}, Point{33_in, 0_in, 0_deg}}, "A");
   profile_controller.setTarget("A");
   profile_controller.waitUntilSettled();
+
+  // Activate intake
+  intake_controller.setTarget(100);  // Maximum velocity 100 for red gearset
+
+  // Continue moving forwards through row of blocks
+  profile_controller.generatePath({Point{33_in, 0_in, 0_deg}, Point{50_in, 0_in, 0_deg}}, "B");
+  profile_controller.setTarget("B");
+  profile_controller.waitUntilSettled();
+  intake_controller.setTarget(0);
 }
