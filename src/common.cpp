@@ -7,7 +7,7 @@ using namespace okapi;
  */
 
 // Modifier controller sensitivity
-const float CONT_X_MODIFIER = 0.3;
+const float CONT_X_MODIFIER = 0.5;
 const float CONT_Y_MODIFIER = 0.5;
 
 // Motor ports
@@ -63,3 +63,5 @@ AsyncVelIntegratedController intake_controller = AsyncControllerFactory::velInte
 
 // Async controller for lift
 AsyncPosIntegratedController lift_controller = AsyncControllerFactory::posIntegrated(LIFT_MOTOR);
+const int NUM_HEIGHTS = 4;
+const int HEIGHTS[4] = {180, 600, 1100, 1600};

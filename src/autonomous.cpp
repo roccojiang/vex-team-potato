@@ -15,6 +15,7 @@ using namespace okapi;
  */
 void autonomous()
 {
+  /*
   // Move forward to row of blocks
   profile_controller.generatePath({Point{CHASSIS_LENGTH, 0_in, 0_deg}, Point{33_in, 0_in, 0_deg}}, "A");
   profile_controller.setTarget("A");
@@ -28,4 +29,17 @@ void autonomous()
   profile_controller.setTarget("B");
   profile_controller.waitUntilSettled();
   intake_controller.setTarget(0);  // Set velocity to 0
+  */
+
+  // Move lift up slightly
+  lift_controller.setTarget(HEIGHTS[0]);
+
+  // Push out starting block
+  chassis.moveDistanceAsync(30_in);
+  INTAKE_MOTORS.moveVoltage(-12000);
+  pros::delay(2000);
+  INTAKE_MOTORS.moveVoltage(0);
+
+  // Move backwards
+  chassis.moveDistance(-50_in);
 }

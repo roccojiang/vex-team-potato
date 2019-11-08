@@ -16,11 +16,10 @@ using namespace okapi;
  * task, not resume it from where it left off.
  */
 
-const int NUM_HEIGHTS = 4;
-const int heights[NUM_HEIGHTS] = {200, 600, 1100, 1600};
-
 void opcontrol()
 {
+	lift_controller.setTarget(HEIGHTS[0]);
+
 	int goal_height = 0;
 	int lift_mode = 0;
 
@@ -62,13 +61,13 @@ void opcontrol()
 			{
 				goal_height++;
 				pros::lcd::print(1, "Height setting last at: %d", goal_height);
-				lift_controller.setTarget(heights[goal_height]);
+				lift_controller.setTarget(HEIGHTS[goal_height]);
 			}
 			else if (lift_down_button.changedToPressed() && goal_height > 0)
 			{
 				goal_height--;
 				pros::lcd::print(1, "Height setting last at: %d", goal_height);
-				lift_controller.setTarget(heights[goal_height]);
+				lift_controller.setTarget(HEIGHTS[goal_height]);
 			}
 		}
 		// Even lift mode = Manual voltage control
