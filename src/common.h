@@ -53,4 +53,5 @@ extern AsyncVelIntegratedController intake_controller;
 // Async controller for lift
 extern AsyncPosIntegratedController lift_controller;
 extern const int NUM_HEIGHTS;
+extern const int START_HEIGHT;
 extern const int HEIGHTS[4];

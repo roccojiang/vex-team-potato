@@ -32,7 +32,7 @@ void autonomous()
   */
 
   // Move lift up slightly
-  lift_controller.setTarget(HEIGHTS[0]);
+  lift_controller.setTarget(START_HEIGHT);
 
   // Push out starting block
   chassis.moveDistanceAsync(30_in);

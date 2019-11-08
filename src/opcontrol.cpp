@@ -18,7 +18,7 @@ using namespace okapi;
 
 void opcontrol()
 {
-	lift_controller.setTarget(HEIGHTS[0]);
+	lift_controller.setTarget(START_HEIGHT);
 
 	int goal_height = 0;
 	int lift_mode = 0;
@@ -50,6 +50,9 @@ void opcontrol()
 		{
 			lift_mode++;
 			pros::lcd::print(0, (lift_mode % 2 == 0) ? "Lift mode: PID" : "Lift mode: Manual voltage");
+			controller.clearLine(0);
+			pros::delay(50);
+			controller.setText(0, 0, (lift_mode % 2 == 0) ? "PID" : "Manual");
 		}
 
 		// Odd lift mode = PID
