@@ -21,11 +21,15 @@ const int INTAKE_MOTOR_RIGHT_P = 20;
 
 const int LIFT_MOTOR_P = 17;
 
+const int PUSH_MOTOR_P = 14;
+
 // Motors
 Motor INTAKE_MOTOR_LEFT(11);
 Motor INTAKE_MOTOR_RIGHT(20);
 
 Motor LIFT_MOTOR(17);
+
+Motor PUSH_MOTOR(14);
 
 // Motor groups
 MotorGroup INTAKE_MOTORS({11, -20});
@@ -56,3 +60,6 @@ AsyncMotionProfileController profile_controller = AsyncControllerFactory::motion
 
 // Async controller for intake
 AsyncVelIntegratedController intake_controller = AsyncControllerFactory::velIntegrated(INTAKE_MOTORS);
+
+// Async controller for lift
+AsyncPosIntegratedController lift_controller = AsyncControllerFactory::posIntegrated(LIFT_MOTOR);

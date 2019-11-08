@@ -16,14 +16,26 @@ using namespace okapi;
  * task, not resume it from where it left off.
  */
 
+const int NUM_HEIGHTS = 4;
+const int heights[NUM_HEIGHTS] = {200, 600, 1100, 1600};
+
 void opcontrol()
 {
+	int goal_height = 0;
+	int lift_mode = 0;
+
 	Controller controller;
-	ControllerButton autonomous_button(ControllerDigital::X);
+	ControllerButton autonomous_button(ControllerDigital::Y);
+	ControllerButton lift_mode_button(ControllerDigital::L2);
 	ControllerButton intake_in_button(ControllerDigital::A);
 	ControllerButton intake_out_button(ControllerDigital::B);
+	ControllerButton intake_out_slow_button(ControllerDigital::X);
 	ControllerButton lift_up_button(ControllerDigital::up);
 	ControllerButton lift_down_button(ControllerDigital::down);
+	ControllerButton push_forward_button(ControllerDigital::R1);
+	ControllerButton push_backward_button(ControllerDigital::L1);
+
+	pros::lcd::initialize();
 
 	while (true)
 	{
@@ -33,12 +45,43 @@ void opcontrol()
 		// Intake control
 		if (intake_in_button.isPressed()) INTAKE_MOTORS.moveVoltage(12000);
 		else if (intake_out_button.isPressed()) INTAKE_MOTORS.moveVoltage(-12000);
+		else if (intake_out_slow_button.isPressed()) INTAKE_MOTORS.moveVoltage(-4000);
 		else INTAKE_MOTORS.moveVoltage(0);
 
 		// Lift control
-		if (lift_up_button.isPressed()) LIFT_MOTOR.moveVoltage(12000);
-		else if (lift_down_button.isPressed()) LIFT_MOTOR.moveVoltage(-12000);
-		else LIFT_MOTOR.moveVoltage(0);
+		if (lift_mode_button.changedToPressed())
+		{
+			lift_mode++;
+			pros::lcd::print(0, (lift_mode % 2 == 0) ? "Lift mode: PID" : "Lift mode: Manual voltage");
+		}
+
+		// Odd lift mode = PID
+		if (lift_mode % 2 == 0)
+		{
+			if (lift_up_button.changedToPressed() && goal_height < NUM_HEIGHTS - 1)
+			{
+				goal_height++;
+				pros::lcd::print(1, "Height setting last at: %d", goal_height);
+				lift_controller.setTarget(heights[goal_height]);
+			}
+			else if (lift_down_button.changedToPressed() && goal_height > 0)
+			{
+				goal_height--;
+				pros::lcd::print(1, "Height setting last at: %d", goal_height);
+				lift_controller.setTarget(heights[goal_height]);
+			}
+		}
+		// Even lift mode = Manual voltage control
+		else if (lift_mode % 2 == 1)
+		{
+			if (lift_up_button.isPressed()) LIFT_MOTOR.moveVoltage(12000);
+			else if (lift_down_button.isPressed()) LIFT_MOTOR.moveVoltage(-12000);
+			else LIFT_MOTOR.moveVoltage(0);
+		}
+
+		// Stack push control
+		if (push_forward_button.isPressed()) PUSH_MOTOR.moveVoltage(12000);
+		else if (push_backward_button.isPressed()) PUSH_MOTOR.moveVoltage(-12000);
 
 		// Arcade drive with left and right sticks
 		chassis.arcade(controller.getAnalog(ControllerAnalog::leftY) * CONT_Y_MODIFIER,
