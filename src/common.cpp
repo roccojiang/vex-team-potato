@@ -64,5 +64,5 @@ AsyncVelIntegratedController intake_controller = AsyncControllerFactory::velInte
 // Async controller for lift
 AsyncPosIntegratedController lift_controller = AsyncControllerFactory::posIntegrated(LIFT_MOTOR);
 const int NUM_HEIGHTS = 4;
-const int START_HEIGHT = 200;
-const int HEIGHTS[4] = {230, 600, 1100, 1600};
+const int START_HEIGHT = 180;
+const int HEIGHTS[4] = {220, 600, 1100, 1600};

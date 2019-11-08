@@ -27,8 +27,8 @@ void opcontrol()
 	ControllerButton autonomous_button(ControllerDigital::Y);
 	ControllerButton lift_mode_button(ControllerDigital::L2);
 	ControllerButton intake_in_button(ControllerDigital::A);
-	ControllerButton intake_out_button(ControllerDigital::B);
-	ControllerButton intake_out_slow_button(ControllerDigital::X);
+	ControllerButton intake_out_slow_button(ControllerDigital::B);
+	ControllerButton intake_out_button(ControllerDigital::X);
 	ControllerButton lift_up_button(ControllerDigital::R1);
 	ControllerButton lift_down_button(ControllerDigital::L1);
 
@@ -74,6 +74,7 @@ void opcontrol()
 		// Even lift mode = Manual voltage control
 		else if (lift_mode % 2 == 1)
 		{
+			goal_height = 0;
 			if (lift_up_button.isPressed()) LIFT_MOTOR.moveVoltage(12000);
 			else if (lift_down_button.isPressed()) LIFT_MOTOR.moveVoltage(-12000);
 			else LIFT_MOTOR.moveVoltage(0);
