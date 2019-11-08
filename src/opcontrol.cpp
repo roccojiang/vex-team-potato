@@ -29,10 +29,8 @@ void opcontrol()
 	ControllerButton intake_in_button(ControllerDigital::A);
 	ControllerButton intake_out_button(ControllerDigital::B);
 	ControllerButton intake_out_slow_button(ControllerDigital::X);
-	ControllerButton lift_up_button(ControllerDigital::up);
-	ControllerButton lift_down_button(ControllerDigital::down);
-	ControllerButton push_forward_button(ControllerDigital::R1);
-	ControllerButton push_backward_button(ControllerDigital::L1);
+	ControllerButton lift_up_button(ControllerDigital::R1);
+	ControllerButton lift_down_button(ControllerDigital::L1);
 
 	pros::lcd::initialize();
 
@@ -77,10 +75,6 @@ void opcontrol()
 			else if (lift_down_button.isPressed()) LIFT_MOTOR.moveVoltage(-12000);
 			else LIFT_MOTOR.moveVoltage(0);
 		}
-
-		// Stack push control
-		if (push_forward_button.isPressed()) PUSH_MOTOR.moveVoltage(12000);
-		else if (push_backward_button.isPressed()) PUSH_MOTOR.moveVoltage(-12000);
 
 		// Arcade drive with left and right sticks
 		chassis.arcade(controller.getAnalog(ControllerAnalog::leftY) * CONT_Y_MODIFIER,
