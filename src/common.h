@@ -18,20 +18,19 @@ extern const int DRIVE_MOTOR_RIGHT_B;
 extern const int INTAKE_MOTOR_LEFT_P;
 extern const int INTAKE_MOTOR_RIGHT_P;
 
-extern const int LIFT_MOTOR_P;
-
-extern const int PUSH_MOTOR_P;
+extern const int LIFT_MOTOR_LEFT_P;
+extern const int LIFT_MOTOR_RIGHT_P;
 
 // Motors
 extern Motor INTAKE_MOTOR_LEFT;
 extern Motor INTAKE_MOTOR_RIGHT;
 
-extern Motor LIFT_MOTOR;
-
-extern Motor PUSH_MOTOR;
+extern Motor LIFT_MOTOR_LEFT;
+extern Motor LIFT_MOTOR_RIGHT;
 
 // Motor groups
 extern MotorGroup INTAKE_MOTORS;
+extern MotorGroup LIFT_MOTORS;
 
 // Chassis measurements
 extern const QLength WHEEL_DIAMETER;
@@ -54,4 +53,4 @@ extern AsyncVelIntegratedController intake_controller;
 extern AsyncPosIntegratedController lift_controller;
 extern const int NUM_HEIGHTS;
 extern const int START_HEIGHT;
-extern const int HEIGHTS[4];
+extern const int HEIGHTS[5];

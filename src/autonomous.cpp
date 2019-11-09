@@ -15,28 +15,12 @@ using namespace okapi;
  */
 void autonomous()
 {
-  /*
-  // Move forward to row of blocks
-  profile_controller.generatePath({Point{CHASSIS_LENGTH, 0_in, 0_deg}, Point{33_in, 0_in, 0_deg}}, "A");
-  profile_controller.setTarget("A");
-  profile_controller.waitUntilSettled();
-
-  // Activate intake
-  intake_controller.setTarget(100);  // Maximum velocity 100 for red gearset
-
-  // Continue moving forward through row of blocks, then deactivate intake
-  profile_controller.generatePath({Point{33_in, 0_in, 0_deg}, Point{50_in, 0_in, 0_deg}}, "B");
-  profile_controller.setTarget("B");
-  profile_controller.waitUntilSettled();
-  intake_controller.setTarget(0);  // Set velocity to 0
-  */
-
   // Move lift up slightly
   lift_controller.setTarget(START_HEIGHT);
 
   // Push out starting block
   chassis.moveDistanceAsync(30_in);
-  INTAKE_MOTORS.moveVoltage(-12000);
+  INTAKE_MOTORS.moveVoltage(-10000);
   pros::delay(2000);
   INTAKE_MOTORS.moveVoltage(0);
 

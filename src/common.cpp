@@ -19,7 +19,8 @@ const int DRIVE_MOTOR_RIGHT_B = 16;
 const int INTAKE_MOTOR_LEFT_P = 11;
 const int INTAKE_MOTOR_RIGHT_P = 20;
 
-const int LIFT_MOTOR_P = 17;
+const int LIFT_MOTOR_LEFT_P = 14;
+const int LIFT_MOTOR_RIGHT_P = 17;
 
 const int PUSH_MOTOR_P = 14;
 
@@ -27,12 +28,14 @@ const int PUSH_MOTOR_P = 14;
 Motor INTAKE_MOTOR_LEFT(11);
 Motor INTAKE_MOTOR_RIGHT(20);
 
-Motor LIFT_MOTOR(17);
+Motor LIFT_MOTOR_LEFT(14);
+Motor LIFT_MOTOR_RIGHT(17);
 
 Motor PUSH_MOTOR(14);
 
 // Motor groups
 MotorGroup INTAKE_MOTORS({11, -20});
+MotorGroup LIFT_MOTORS({-14, 17});
 
 // Chassis measurements
 const QLength WHEEL_DIAMETER = 4_in;
@@ -62,7 +65,13 @@ AsyncMotionProfileController profile_controller = AsyncControllerFactory::motion
 AsyncVelIntegratedController intake_controller = AsyncControllerFactory::velIntegrated(INTAKE_MOTORS);
 
 // Async controller for lift
-AsyncPosIntegratedController lift_controller = AsyncControllerFactory::posIntegrated(LIFT_MOTOR);
-const int NUM_HEIGHTS = 4;
-const int START_HEIGHT = 180;
-const int HEIGHTS[4] = {220, 600, 1100, 1600};
+AsyncPosIntegratedController lift_controller = AsyncControllerFactory::posIntegrated(LIFT_MOTORS);
+const int NUM_HEIGHTS = 5;
+const int START_HEIGHT = 50;
+const int HEIGHTS[5] = {
+  75,   // Bottom limit
+  250,  // Intake for blocks placed on top of another block
+  485,  // Place block in low tower
+  525,  // Remove block from low tower
+  700   // Place block in mid tower
+};
