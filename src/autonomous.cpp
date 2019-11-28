@@ -15,6 +15,8 @@ using namespace okapi;
  */
 void autonomous()
 {
+  chassis.moveDistance(30_in);
+  /*
   // Move lift up slightly
   lift_controller.setTarget(START_HEIGHT);
 
@@ -26,4 +28,5 @@ void autonomous()
 
   // Move backwards
   chassis.moveDistance(-50_in);
+  */
 }

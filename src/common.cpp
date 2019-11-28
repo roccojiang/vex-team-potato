@@ -11,10 +11,8 @@ const float CONT_X_MODIFIER = 0.5;
 const float CONT_Y_MODIFIER = 0.5;
 
 // Motor ports
-const int DRIVE_MOTOR_LEFT_F = 5;
-const int DRIVE_MOTOR_LEFT_B = 15;
-const int DRIVE_MOTOR_RIGHT_F = 6;
-const int DRIVE_MOTOR_RIGHT_B = 16;
+const int DRIVE_MOTOR_LEFT = 15;
+const int DRIVE_MOTOR_RIGHT = 16;
 
 const int INTAKE_MOTOR_LEFT_P = 11;
 const int INTAKE_MOTOR_RIGHT_P = 20;
@@ -39,16 +37,16 @@ MotorGroup LIFT_MOTORS({-14, 17});
 
 // Chassis measurements
 const QLength WHEEL_DIAMETER = 4_in;
-const QLength CHASSIS_WIDTH = 13.5_in;  // Track width
-const QLength CHASSIS_LENGTH = 16_in;
+const QLength CHASSIS_WIDTH = 15_in;  // Track width - need to fix
+const QLength CHASSIS_LENGTH = 18_in;
 
 // Gear ratio
-const AbstractMotor::GearsetRatioPair GEAR_RATIO = AbstractMotor::gearset::green * (36.0/84.0);
+const AbstractMotor::GearsetRatioPair GEAR_RATIO = AbstractMotor::gearset::green * (18.0/12.0);
 
 // Chassis
 ChassisControllerIntegrated chassis = ChassisControllerFactory::create(
-  {-DRIVE_MOTOR_LEFT_F, -DRIVE_MOTOR_LEFT_B},  // Left motors
-	{DRIVE_MOTOR_RIGHT_F, DRIVE_MOTOR_RIGHT_B},  // Right motors
+  DRIVE_MOTOR_LEFT,
+	-DRIVE_MOTOR_RIGHT,
   GEAR_RATIO,  // Motor gearset multiplied by external physical gear ratio
   {WHEEL_DIAMETER, CHASSIS_WIDTH}
 );
@@ -70,7 +68,7 @@ const int NUM_HEIGHTS = 5;
 const int START_HEIGHT = 50;
 const int HEIGHTS[5] = {
   75,   // Bottom limit
-  250,  // Intake for blocks placed on top of another block
+  250,  // Intake for blocks placed on top of another block - NEED TO ADJUST
   485,  // Place block in low tower
   525,  // Remove block from low tower
   700   // Place block in mid tower
