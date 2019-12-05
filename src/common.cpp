@@ -3,19 +3,33 @@
 using namespace okapi;
 
 /**
+ * Controller initialisation
+ */
+
+// Controllers
+Controller master(ControllerId::master);
+Controller partner(ControllerId::partner);
+ControllerButton autonomous_button(ControllerId::partner, ControllerDigital::Y);
+ControllerButton intake_in_button(ControllerId::partner, ControllerDigital::A);
+ControllerButton intake_out_slow_button(ControllerId::partner, ControllerDigital::B);
+ControllerButton intake_out_button(ControllerId::partner, ControllerDigital::X);
+ControllerButton lift_up_button(ControllerId::partner, ControllerDigital::R1);
+ControllerButton lift_down_button(ControllerId::partner, ControllerDigital::L1);
+
+/**
  * Chassis and global variables
  */
 
 // Modifier controller sensitivity
-const float CONT_X_MODIFIER = 0.5;
-const float CONT_Y_MODIFIER = 0.5;
+const float CONT_X_MODIFIER = 1.0;
+const float CONT_Y_MODIFIER = 1.0;
 
 // Motor ports
 const int DRIVE_MOTOR_LEFT = 15;
 const int DRIVE_MOTOR_RIGHT = 16;
 
-const int INTAKE_MOTOR_LEFT_P = 11;
-const int INTAKE_MOTOR_RIGHT_P = 20;
+const int INTAKE_MOTOR_LEFT_P = 1;
+const int INTAKE_MOTOR_RIGHT_P = 10;
 
 const int LIFT_MOTOR_LEFT_P = 14;
 const int LIFT_MOTOR_RIGHT_P = 17;
@@ -23,17 +37,17 @@ const int LIFT_MOTOR_RIGHT_P = 17;
 const int PUSH_MOTOR_P = 14;
 
 // Motors
-Motor INTAKE_MOTOR_LEFT(11);
-Motor INTAKE_MOTOR_RIGHT(20);
+Motor INTAKE_MOTOR_LEFT(INTAKE_MOTOR_LEFT_P);
+Motor INTAKE_MOTOR_RIGHT(INTAKE_MOTOR_RIGHT_P);
 
-Motor LIFT_MOTOR_LEFT(14);
-Motor LIFT_MOTOR_RIGHT(17);
+Motor LIFT_MOTOR_LEFT(LIFT_MOTOR_LEFT_P);
+Motor LIFT_MOTOR_RIGHT(LIFT_MOTOR_RIGHT_P);
 
 Motor PUSH_MOTOR(14);
 
 // Motor groups
-MotorGroup INTAKE_MOTORS({11, -20});
-MotorGroup LIFT_MOTORS({-14, 17});
+MotorGroup INTAKE_MOTORS({1, -10});
+MotorGroup LIFT_MOTORS({14, -17});
 
 // Chassis measurements
 const QLength WHEEL_DIAMETER = 4_in;

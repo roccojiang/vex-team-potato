@@ -2,6 +2,20 @@
 using namespace okapi;
 
 /**
+ * Controller initialisation
+ */
+
+// Controllers
+extern Controller master;
+extern Controller partner;
+extern ControllerButton autonomous_button;
+extern ControllerButton intake_in_button;
+extern ControllerButton intake_out_slow_button;
+extern ControllerButton intake_out_button;
+extern ControllerButton lift_up_button;
+extern ControllerButton lift_down_button;
+
+/**
  * Chassis and global variables
  */
 

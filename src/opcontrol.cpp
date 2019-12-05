@@ -23,14 +23,6 @@ void opcontrol()
 
 	int goal_height = 0;
 
-	Controller controller;
-	ControllerButton autonomous_button(ControllerDigital::Y);
-	ControllerButton intake_in_button(ControllerDigital::A);
-	ControllerButton intake_out_slow_button(ControllerDigital::B);
-	ControllerButton intake_out_button(ControllerDigital::X);
-	ControllerButton lift_up_button(ControllerDigital::R1);
-	ControllerButton lift_down_button(ControllerDigital::L1);
-
 	pros::lcd::initialize();
 
 	while (true)
@@ -62,9 +54,9 @@ void opcontrol()
 			pros::lcd::print(1, "Height: %d", goal_height);
 		}
 
-		// Arcade drive with left and right sticks
-		chassis.arcade(controller.getAnalog(ControllerAnalog::leftY) * CONT_Y_MODIFIER,
-							     controller.getAnalog(ControllerAnalog::leftX) * CONT_X_MODIFIER);
+		// Arcade drive
+		chassis.arcade(master.getAnalog(ControllerAnalog::leftY) * CONT_Y_MODIFIER,
+							     master.getAnalog(ControllerAnalog::leftX) * CONT_X_MODIFIER);
 
 		pros::delay(10);
 	}

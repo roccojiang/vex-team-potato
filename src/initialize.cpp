@@ -22,6 +22,13 @@ void initialize() {
 	pros::lcd::set_text(1, "Team Potato");
 
 	pros::lcd::register_btn1_cb(on_center_button);
+
+	master.clear();
+	master.setText(0, 0, "Driver");
+	pros::delay(100);
+	partner.clear();
+	partner.setText(0, 0, "Controls");
+	pros::delay(100);
 }
 
 /**
