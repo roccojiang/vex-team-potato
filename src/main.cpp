@@ -7,12 +7,12 @@ using namespace okapi;
 
 // Controllers
 Controller controller;
-ControllerButton autonomous_button(ControllerDigital::Y);
 ControllerButton intake_in_button(ControllerDigital::A);
 ControllerButton intake_out_slow_button(ControllerDigital::B);
 ControllerButton intake_out_button(ControllerDigital::X);
 ControllerButton lift_up_button(ControllerDigital::R1);
 ControllerButton lift_down_button(ControllerDigital::L1);
+ControllerButton push_button(ControllerDigital::Y);
 
 
 /**
@@ -30,8 +30,8 @@ const int DRIVE_MOTOR_RIGHT = 16;
 const int INTAKE_MOTOR_LEFT_P = 1;
 const int INTAKE_MOTOR_RIGHT_P = 10;
 
-const int LIFT_MOTOR_LEFT_P = 14;
-const int LIFT_MOTOR_RIGHT_P = 17;
+const int LIFT_MOTOR_LEFT_P = 11;
+const int LIFT_MOTOR_RIGHT_P = 20;
 
 const int PUSH_MOTOR_P = 5;
 
@@ -42,11 +42,13 @@ Motor INTAKE_MOTOR_RIGHT(INTAKE_MOTOR_RIGHT_P);
 Motor LIFT_MOTOR_LEFT(LIFT_MOTOR_LEFT_P);
 Motor LIFT_MOTOR_RIGHT(LIFT_MOTOR_RIGHT_P);
 
-Motor PUSH_MOTOR(14);
+Motor PUSH_MOTOR(-PUSH_MOTOR_P);
 
 // Motor groups
-MotorGroup INTAKE_MOTORS({1, -10});
-MotorGroup LIFT_MOTORS({14, -17});
+//MotorGroup INTAKE_MOTORS({1, -10});
+//MotorGroup LIFT_MOTORS({11, -20});
+MotorGroup INTAKE_MOTORS({INTAKE_MOTOR_LEFT_P, -INTAKE_MOTOR_RIGHT_P});
+MotorGroup LIFT_MOTORS({LIFT_MOTOR_LEFT_P, -LIFT_MOTOR_RIGHT_P});
 
 // Chassis measurements
 const QLength WHEEL_DIAMETER = 4_in;
@@ -68,20 +70,27 @@ auto intake_controller = AsyncVelControllerBuilder()
   .withMotor(INTAKE_MOTORS)
   .build();
 
+// Async controller for pusher
+auto push_controller = AsyncPosControllerBuilder()
+  .withMotor(PUSH_MOTOR)
+  .withMaxVelocity(25)
+  .build();
+int is_stack = 0;
+
 // Async controller for lift
 auto lift_controller = AsyncPosControllerBuilder()
   .withMotor(LIFT_MOTORS)
-  .withMaxVelocity(50)  // red gearset – out of 100 rpm?
+  .withMaxVelocity(75)
   .build();
 
 const int NUM_HEIGHTS = 5;
 const int START_HEIGHT = 50;
 const int HEIGHTS[5] = {
-  75,   // Bottom limit
-  250,  // Intake for blocks placed on top of another block - NEED TO ADJUST
-  485,  // Place block in low tower
-  525,  // Remove block from low tower
-  700   // Place block in mid tower
+  150,   // Bottom limit
+  700,  // Intake for blocks placed on top of another block - NEED TO ADJUST
+  1200,  // Place block in low tower
+  1700,  // Remove block from low tower
+  2000   // Place block in mid tower
 };
 
 
@@ -108,12 +117,10 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Team Potato");
+	lift_controller->tarePosition();
+  push_controller->tarePosition();
 
-	pros::lcd::register_btn1_cb(on_center_button);
-
-	pros::delay(100);
+	pros::delay(50);
 }
 
 /**
@@ -165,6 +172,11 @@ void autonomous() {}
 
 void opcontrol()
 {
+  // TEMPORARY
+  lift_controller->tarePosition();
+  push_controller->tarePosition();
+  // TEMPORARY
+
 	lift_controller->setTarget(START_HEIGHT);
 
 	int goal_height = 0;
@@ -173,14 +185,26 @@ void opcontrol()
 
 	while (true)
 	{
-		// Autonomous debug button
-		if (autonomous_button.changedToPressed()) autonomous();
-
-		// Intake control
+    // Intake control
 		if (intake_in_button.isPressed()) INTAKE_MOTORS.moveVoltage(8000);
 		else if (intake_out_button.isPressed()) INTAKE_MOTORS.moveVoltage(-8000);
 		else if (intake_out_slow_button.isPressed()) INTAKE_MOTORS.moveVoltage(-4000);
 		else INTAKE_MOTORS.moveVoltage(0);
+
+    // Pusher mechanism
+    if (push_button.changedToPressed())
+    {
+      if (is_stack == 0)
+      {
+        push_controller->setTarget(900);
+        is_stack = 1;
+      }
+      else
+      {
+        push_controller->setTarget(0);
+        is_stack = 0;
+      }
+    }
 
 		// Integrated PID lift height control
 		if (lift_up_button.changedToPressed() && goal_height < NUM_HEIGHTS - 1)
