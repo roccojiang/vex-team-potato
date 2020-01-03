@@ -5,3 +5,5 @@
 **School:** Harrow International School Hong Kong
 
 Team code repository, written using PROS for VEX V5.
+
+<img src="logo.png" width="250">
