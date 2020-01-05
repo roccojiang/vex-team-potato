@@ -13,6 +13,7 @@ ControllerButton intake_out_button(ControllerDigital::X);
 ControllerButton lift_up_button(ControllerDigital::R1);
 ControllerButton lift_down_button(ControllerDigital::L1);
 ControllerButton push_button(ControllerDigital::Y);
+ControllerButton lift_reset_button(ControllerDigital::down);
 
 
 /**
@@ -45,23 +46,21 @@ Motor LIFT_MOTOR_RIGHT(LIFT_MOTOR_RIGHT_P);
 Motor PUSH_MOTOR(-PUSH_MOTOR_P);
 
 // Motor groups
-//MotorGroup INTAKE_MOTORS({1, -10});
-//MotorGroup LIFT_MOTORS({11, -20});
+MotorGroup DRIVE_MOTORS({DRIVE_MOTOR_LEFT, -DRIVE_MOTOR_RIGHT});
 MotorGroup INTAKE_MOTORS({INTAKE_MOTOR_LEFT_P, -INTAKE_MOTOR_RIGHT_P});
 MotorGroup LIFT_MOTORS({LIFT_MOTOR_LEFT_P, -LIFT_MOTOR_RIGHT_P});
 
 // Chassis measurements
 const QLength WHEEL_DIAMETER = 4_in;
-const QLength CHASSIS_WIDTH = 15_in;  // Track width - need to fix
-const QLength CHASSIS_LENGTH = 18_in;
+const QLength WHEELBASE = 13.9_in;  // Chassis length
 
 // Gear ratio
-const int GEAR_RATIO = 18.0 / 12.0;  // Multiply with green gearset
+const int GEAR_RATIO = (18.0 / 12.0) * 2;  // Multiply with green gearset
 
 // Chassis
 auto chassis = ChassisControllerBuilder()
   .withMotors(DRIVE_MOTOR_LEFT, -DRIVE_MOTOR_RIGHT)
-  .withDimensions(AbstractMotor::gearset::green, {{WHEEL_DIAMETER, CHASSIS_WIDTH}, imev5GreenTPR * GEAR_RATIO})
+  .withDimensions(AbstractMotor::gearset::green, {{WHEEL_DIAMETER, WHEELBASE}, imev5GreenTPR * GEAR_RATIO})
   .withOdometry()
   .buildOdometry();
 
@@ -73,9 +72,11 @@ auto intake_controller = AsyncVelControllerBuilder()
 // Async controller for pusher
 auto push_controller = AsyncPosControllerBuilder()
   .withMotor(PUSH_MOTOR)
-  .withMaxVelocity(25)
+  .withMaxVelocity(30)
   .build();
 int is_stack = 0;
+
+// Async controller for lift, with
 
 // Async controller for lift
 auto lift_controller = AsyncPosControllerBuilder()
@@ -83,14 +84,12 @@ auto lift_controller = AsyncPosControllerBuilder()
   .withMaxVelocity(75)
   .build();
 
-const int NUM_HEIGHTS = 5;
-const int START_HEIGHT = 50;
-const int HEIGHTS[5] = {
-  150,   // Bottom limit
-  700,  // Intake for blocks placed on top of another block - NEED TO ADJUST
-  1200,  // Place block in low tower
-  1700,  // Remove block from low tower
-  2000   // Place block in mid tower
+const int NUM_HEIGHTS = 3;
+const int START_HEIGHT = 375;
+const int HEIGHTS[NUM_HEIGHTS] = {
+  START_HEIGHT,   // Bottom limit
+  2200,  // Place/remove block in low tower
+  2700   // Place/remove block in mid tower
 };
 
 
@@ -116,11 +115,10 @@ void on_center_button() {
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
-void initialize() {
-	lift_controller->tarePosition();
+void initialize()
+{
+  lift_controller->tarePosition();
   push_controller->tarePosition();
-
-	pros::delay(50);
 }
 
 /**
@@ -153,7 +151,26 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous()
+{
+  chassis->moveDistance(-8_in);
+  pros::delay(100);
+  chassis->moveDistance(8_in);
+  pros::delay(100);
+
+  lift_controller->setTarget(500);
+  lift_controller->waitUntilSettled();
+  pros::delay(50);
+  lift_controller->setTarget(0);
+  lift_controller->waitUntilSettled();
+  pros::delay(50);
+  lift_controller->tarePosition();
+  pros::delay(50);
+
+  lift_controller->setTarget(START_HEIGHT);
+
+  //chassis->driveToPoint({22_in, 0_in});
+}
 
 
 /**
@@ -173,11 +190,22 @@ void autonomous() {}
 void opcontrol()
 {
   // TEMPORARY
-  lift_controller->tarePosition();
-  push_controller->tarePosition();
+  // lift_controller->tarePosition();
+  // push_controller->tarePosition();
   // TEMPORARY
 
-	lift_controller->setTarget(START_HEIGHT);
+  //autonomous();
+
+  // lift_controller->setTarget(500);
+  // lift_controller->waitUntilSettled();
+  // pros::delay(50);
+  // lift_controller->setTarget(0);
+  // lift_controller->waitUntilSettled();
+  // pros::delay(50);
+  // lift_controller->tarePosition();
+  // pros::delay(50);
+  //
+  // lift_controller->setTarget(START_HEIGHT);
 
 	int goal_height = 0;
 
@@ -186,10 +214,17 @@ void opcontrol()
 	while (true)
 	{
     // Intake control
-		if (intake_in_button.isPressed()) INTAKE_MOTORS.moveVoltage(8000);
-		else if (intake_out_button.isPressed()) INTAKE_MOTORS.moveVoltage(-8000);
-		else if (intake_out_slow_button.isPressed()) INTAKE_MOTORS.moveVoltage(-4000);
+		if (intake_in_button.isPressed()) INTAKE_MOTORS.moveVoltage(10000);
+		else if (intake_out_button.isPressed()) INTAKE_MOTORS.moveVoltage(-10000);
+		else if (intake_out_slow_button.isPressed()) INTAKE_MOTORS.moveVoltage(-5000);
 		else INTAKE_MOTORS.moveVoltage(0);
+
+    if (lift_reset_button.changedToPressed())
+    {
+      LIFT_MOTORS.moveVoltage(0);
+      pros::delay(1000);
+      lift_controller->tarePosition();
+    }
 
     // Pusher mechanism
     if (push_button.changedToPressed())
@@ -231,3 +266,11 @@ void opcontrol()
 		pros::delay(10);
 	}
 }
+
+// pros::Controller master(pros::E_CONTROLLER_MASTER);
+// void opcontrol(){
+//   while(1){
+//     int x = master.get_analog(ANALOG_LEFT_X);
+//     int y = master.get_analog(ANALOG_)
+//   }
+// }
