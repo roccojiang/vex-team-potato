@@ -168,8 +168,6 @@ void autonomous()
   pros::delay(50);
 
   lift_controller->setTarget(START_HEIGHT);
-
-  //chassis->driveToPoint({22_in, 0_in});
 }
 
 
@@ -189,12 +187,7 @@ void autonomous()
 
 void opcontrol()
 {
-  // TEMPORARY
-  // lift_controller->tarePosition();
-  // push_controller->tarePosition();
-  // TEMPORARY
-
-  //autonomous();
+  // autonomous();
 
   // lift_controller->setTarget(500);
   // lift_controller->waitUntilSettled();
@@ -266,11 +259,3 @@ void opcontrol()
 		pros::delay(10);
 	}
 }
-
-// pros::Controller master(pros::E_CONTROLLER_MASTER);
-// void opcontrol(){
-//   while(1){
-//     int x = master.get_analog(ANALOG_LEFT_X);
-//     int y = master.get_analog(ANALOG_)
-//   }
-// }
